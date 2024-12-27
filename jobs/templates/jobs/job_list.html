@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Finder</title>
+</head>
+<body>
+    <h1>Upload Resume to Find Jobs</h1>
+
+    <!-- Resume upload form -->
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="resume">Upload Resume (PDF):</label>
+        <input type="file" name="resume" id="resume" accept=".pdf" required>
+        <button type="submit">Upload</button>
+    </form>
+
+    {% if skills %}
+        <h2>Extracted Skills:</h2>
+        <ul>
+            {% for skill in skills %}
+                <li>{{ skill }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if jobs %}
+        <p>jobs</p>
+        <h2>Job Listings:</h2>
+        <ul>
+            <!-- {% for job in jobs %}
+                <li>
+                    <a href="{{ job.url }}" target="_blank">{{ job.jobtitle }}</a> - {{ job.company }} - {{ job.location }}<br>
+                    <p>{{ job.snippet }}</p>
+                </li>
+            {% endfor %} -->
+
+
+            {% for job in jobs %}
+                <li>
+                    <a href="{{ job.url }}" target="_blank">{{ job.jobtitle }}</a><br>
+                    <strong>{{ job.company }}</strong><br>
+                    Location: {{ job.location }}<br>
+                    <p>{{ job.snippet }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No jobs found matching your skills</p>
+    {% endif %}
+</body>
+</html>
